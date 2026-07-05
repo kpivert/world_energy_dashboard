@@ -6,7 +6,11 @@ import { data } from "./data.js";
 function App() {
   const chart1Ref = useRef(null);
   console.log(data.map((d) => d.country));
-  return <></>;
+  return (
+    <>
+      <div></div>
+    </>
+  );
 }
 
 export default App;
