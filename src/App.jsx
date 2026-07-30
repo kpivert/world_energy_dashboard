@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useDimensions } from "./use-dimensions.js";
 import "./App.css";
 import { data } from "./data.js";
-import { ResponsiveDonut } from "./Donut.jsx";
+import { data2024, ResponsiveDonut } from "./Donut.jsx";
 
 function App() {
   const chart1Ref = useRef(null);
@@ -128,7 +128,11 @@ function App() {
                 <br />
                 Height: {chart4Size.height}
               </p>
-              <ResponsiveDonut />
+              <ResponsiveDonut
+                data2024={data2024}
+                width={chart4Size.width}
+                height={chart4Size.height}
+              />
             </div>
           </div>
         </div>
