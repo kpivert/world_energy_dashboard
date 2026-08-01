@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import { data } from "./data.js";
 import { useMemo, useRef } from "react";
 import { useDimensions } from "./use-dimensions.js";
+import styles from "./donut-chart.module.css";
 
 interface ResponsiveDonutProps {
   data2024: { source: string; value: number }[];
@@ -68,6 +69,7 @@ export const ResponsiveDonut = ({
 };
 
 const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
+  const donutRef = useRef(null);
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2;
   const pieGenerator = d3.pie<any, DataItem>().value((d) => d.value);
 
@@ -107,7 +109,19 @@ const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
     const label = grp.data.source + " (" + grp.value + ")";
 
     return (
-      <g key={i}>
+      <g
+        key={i}
+        className={styles.slice}
+        onMouseEnter={() => {
+          if (donutRef.current) {
+            donutRef.current.classList.add(styles.hasHighlight);
+          }
+        }}
+        onMouseLeave={() => {
+          if (donutRef.current) {
+            donutRef.current.classList.remove(styles.hasHighlight);
+          }
+        }}>
         <path d={slicePath} fill={colors[i]} />
         <circle cx={centroid[0]} cy={centroid[1]} r={2} />
         <line
@@ -140,7 +154,12 @@ const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
 
   return (
     <svg width={width} height={height} style={{ display: "inline-block" }}>
-      <g transform={`translate(${width / 2}, ${height / 2})`}>{shapes}</g>
+      <g
+        transform={`translate(${width / 2}, ${height / 2})`}
+        className={styles.container}
+        ref={donutRef}>
+        {shapes}
+      </g>
     </svg>
   );
 
