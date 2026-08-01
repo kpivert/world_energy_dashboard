@@ -28,7 +28,6 @@ export const data2024 = Object.entries(world2024[0])
     value: value,
   })) as DataItem[];
 
-const MARGIN = 30;
 const MARGIN_X = 150;
 const MARGIN_Y = 50;
 const INFLEXION_PADDING = 20;
@@ -74,8 +73,6 @@ const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
   const pieGenerator = d3.pie<any, DataItem>().value((d) => d.value);
 
   const pie = useMemo(() => pieGenerator(data2024), [data2024]);
-
-  // console.log(pie);
 
   const arcPathGenerator = d3.arc();
 
@@ -162,31 +159,4 @@ const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
       </g>
     </svg>
   );
-
-  // const centroid = arcPathGenerator.centroid(sliceInfo);
-  // const slicePath = arcPathGenerator(sliceInfo);
-
-  // const arcs = pie.map(
-  //   (p) =>
-  //     arcPathGenerator({
-  //       innerRadius: 0,
-  //       outerRadius: radius,
-  //       startAngle: p.startAngle,
-  //       endAngle: p.endAngle,
-  //     }) ?? undefined,
-  // );
-
-  // return (
-  //   <div>
-  //     <svg width={width} height={height} style={{ display: "inline-block" }}>
-  //       <g transform={`translate(${width / 2}, ${height / 2})`}>
-  //         {arcs.map((arc, i) => {
-  //           return <path key={i} d={arc} fill={colors[i]} />;
-  //         })}
-  //       </g>
-  //     </svg>
-  //   </div>
-  // );
 };
-
-// export default ResponsiveDonut;

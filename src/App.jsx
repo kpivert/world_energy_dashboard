@@ -33,35 +33,7 @@ function App() {
     }));
 
   console.log(result);
-  // console.log(result);
-  // console.log(data.map((d) => d.country));
-  // console.log(chart1Size.height, chart1Size.width);
-  // console.log(
-  //   data
-  //     .filter((d) => d.year === 2024)
-  //     .filter((d) => d.country === "World")
-  //     .map(
-  //       ({
-  //         biofuel,
-  //         coal,
-  //         gas,
-  //         nuclear,
-  //         hydro,
-  //         solar,
-  //         wind,
-  //         other_renewable,
-  //       }) => ({
-  //         biofuel,
-  //         coal,
-  //         gas,
-  //         nuclear,
-  //         hydro,
-  //         solar,
-  //         wind,
-  //         other_renewable,
-  //       }),
-  //     ),
-  // );
+
   return (
     <>
       {/* Overall Dashboard */}
