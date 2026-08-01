@@ -80,7 +80,7 @@ const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
     // First Arc is for the Pie...then donut
 
     const sliceInfo = {
-      innerRadius: 0,
+      innerRadius: 70, // this is the only change to make a donut....wow
       outerRadius: radius,
       startAngle: grp.startAngle,
       endAngle: grp.endAngle,
