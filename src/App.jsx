@@ -3,6 +3,7 @@ import { useDimensions } from "./use-dimensions.js";
 import "./App.css";
 import { data } from "./data.js";
 import { data2024, ResponsiveDonut } from "./Donut.jsx";
+import { DonutDatasetTransition } from "./donut-multiple-datasets.js";
 
 function App() {
   const chart1Ref = useRef(null);
@@ -87,6 +88,10 @@ function App() {
                 <br />
                 Height: {chart3Size.height}
               </p>
+              <DonutDatasetTransition
+                width={chart3Size.width}
+                height={chart3Size.height}
+              />
             </div>
             <div
               ref={chart4Ref}
