@@ -4,6 +4,15 @@ import "./App.css";
 import { data } from "./data.js";
 import { data2024, ResponsiveDonut } from "./Donut.jsx";
 import { DonutDatasetTransition } from "./donut-multiple-datasets.js";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function App() {
   const chart1Ref = useRef(null);
@@ -33,7 +42,15 @@ function App() {
       value: value,
     }));
 
-  console.log(result);
+  const years = [...new Set(data.map((d) => d.year))].reverse();
+
+  const [year, setYear] = useState("2024");
+
+  // console.log(result);
+
+  // console.log([...new Set(data.map((d) => d.year))]);
+
+  console.log(years);
 
   return (
     <>
@@ -73,6 +90,23 @@ function App() {
                 <br />
                 Height: {chart2Size.height}
               </p>
+              <Select value={year} onValueChange={setYear}>
+                <SelectTrigger className="w-full max-w-48">
+                  {/* <SelectValue placeholder="Select a Year" /> */}
+                  <SelectValue placeholder="Select a Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Years</SelectLabel>
+                    {years.map((y) => (
+                      <SelectItem key={y} value={String(y)}>
+                        {y}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <p>The selected year is {year}!</p>
             </div>
           </div>
           <div className="gap-y-28"></div>
@@ -81,13 +115,13 @@ function App() {
             <div
               ref={chart3Ref}
               className="bg-orange-700 h-100 md:h-75 border rounded-sm">
-              <p className="p-4 text-3xl text-white">This is number 3</p>
+              {/* <p className="p-4 text-3xl text-white">This is number 3</p>
               <p className="p-4">Line Chart Tracking the Rise of Renewables</p>
               <p className="text-2xl text-orange-500">
                 Width: {chart3Size.width}
                 <br />
                 Height: {chart3Size.height}
-              </p>
+              </p> */}
               <DonutDatasetTransition
                 width={chart3Size.width}
                 height={chart3Size.height}
@@ -96,7 +130,7 @@ function App() {
             <div
               ref={chart4Ref}
               className="bg-green-600 border rounded-sm h-100 md:h-75">
-              <p className="p-4 text-3xl text-white">This is number 4</p>
+              {/* <p className="p-4 text-3xl text-white">This is number 4</p>
               <p className="p-4">
                 Donut Chart Breaking Down the Energy Mix for a Single Year
               </p>
@@ -104,7 +138,7 @@ function App() {
                 Width: {chart4Size.width}
                 <br />
                 Height: {chart4Size.height}
-              </p>
+              </p> */}
               <ResponsiveDonut
                 data2024={data2024}
                 width={chart4Size.width}
