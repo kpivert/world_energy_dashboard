@@ -4,8 +4,14 @@ import { useMemo, useRef } from "react";
 import { useDimensions } from "./use-dimensions.js";
 import styles from "./donut-chart.module.css";
 
+// interface ResponsiveDonutProps {
+//   data2024: { source: string; value: number }[];
+//   width: number;
+//   height: number;
+// }
+
 interface ResponsiveDonutProps {
-  data2024: { source: string; value: number }[];
+  year: number;
   width: number;
   height: number;
 }
@@ -15,18 +21,33 @@ interface DataItem {
   value: number;
 }
 
-const world2024 = data
-  .filter((d) => d.year === 2024)
-  .filter((d) => d.country === "World");
+// const world2024 = data
+//   .filter((d) => d.year === 2024)
+//   .filter((d) => d.country === "World");
 
 const notNeeded = ["country", "primary_energy", "year"];
 
-export const data2024 = Object.entries(world2024[0])
-  .filter(([key]) => !notNeeded.includes(key))
-  .map(([key, value]) => ({
-    source: key,
-    value: value,
-  })) as DataItem[];
+function getDonutDataForYear(year: number | string): DataItem[] {
+  const worldRow = data
+    .filter((d) => d.year === Number(year))
+    .find((d) => d.country === "World");
+
+  if (!worldRow) return [];
+
+  return Object.entries(worldRow)
+    .filter(([key]) => !notNeeded.includes(key))
+    .map(([key, value]) => ({
+      source: key,
+      value: value as number,
+    }));
+}
+
+// export const data2024 = Object.entries(world2024[0])
+//   .filter(([key]) => !notNeeded.includes(key))
+//   .map(([key, value]) => ({
+//     source: key,
+//     value: value,
+//   })) as DataItem[];
 
 const MARGIN_X = 150;
 const MARGIN_Y = 50;
@@ -46,33 +67,39 @@ const colors = [
 ];
 
 export const ResponsiveDonut = ({
-  data2024,
+  year,
   width,
   height,
 }: ResponsiveDonutProps) => {
+  const chartData = useMemo(() => getDonutDataForYear(year), [year]);
   const chartRef = useRef(null);
   const chartSize = useDimensions(chartRef);
-  if (width === 0 || height === 0) {
-    return null;
-  }
+  if (width === 0 || height === 0) return null;
 
   return (
     <div ref={chartRef} style={{ width: "100%", height: "100%" }}>
       <Donut
         height={chartSize.height}
         width={chartSize.width}
-        data2024={data2024}
+        data={chartData}
       />
     </div>
   );
 };
 
-const Donut = ({ data2024, width, height }: ResponsiveDonutProps) => {
+interface DonutProps {
+  data: DataItem[];
+  width: number;
+  height: number;
+}
+
+const Donut = ({ data, width, height }: DonutProps) => {
   const donutRef = useRef(null);
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2;
   const pieGenerator = d3.pie<any, DataItem>().value((d) => d.value);
+  const pie = useMemo(() => pieGenerator(data), [data]);
 
-  const pie = useMemo(() => pieGenerator(data2024), [data2024]);
+  // const pie = useMemo(() => pieGenerator(chartData), [chartData]);
 
   const arcPathGenerator = d3.arc();
 

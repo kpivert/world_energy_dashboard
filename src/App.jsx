@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useDimensions } from "./use-dimensions.js";
 import "./App.css";
 import { data } from "./data.js";
-import { data2024, ResponsiveDonut } from "./Donut.jsx";
+import { ResponsiveDonut } from "./Donut.jsx";
 import { DonutDatasetTransition } from "./donut-multiple-datasets.js";
 import {
   Select,
@@ -28,12 +28,14 @@ function App() {
     .filter((d) => d.year === 2024)
     .filter((d) => d.country === "World");
 
+  const world = data.filter((d) => d.country === "World");
+
   const donutExampleData = Object.entries(world2024).map(([key, value]) => ({
     source: key,
     total: value,
   }));
 
-  const notNeeded = ["country", "primary_energy", "year"];
+  const notNeeded = ["country", "primary_energy"];
 
   const result = Object.entries(world2024[0])
     .filter(([key]) => !notNeeded.includes(key))
@@ -51,6 +53,8 @@ function App() {
   // console.log([...new Set(data.map((d) => d.year))]);
 
   console.log(years);
+
+  // console.table(world2024);
 
   return (
     <>
@@ -106,7 +110,13 @@ function App() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <p>The selected year is {year}!</p>
+              <p>The selected year is {Number(year) / 3}!</p>
+              {console.table(data.filter((d) => d.year === Number(year)))}
+              <p>
+                {data
+                  .filter((d) => d.year === Number(year))
+                  .map((d) => d.biofuel)}
+              </p>
             </div>
           </div>
           <div className="gap-y-28"></div>
@@ -140,7 +150,7 @@ function App() {
                 Height: {chart4Size.height}
               </p> */}
               <ResponsiveDonut
-                data2024={data2024}
+                year={year}
                 width={chart4Size.width}
                 height={chart4Size.height}
               />
