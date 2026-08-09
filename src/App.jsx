@@ -1,8 +1,7 @@
 import { useState, useRef } from "react";
 import { useDimensions } from "./use-dimensions.js";
-import "./App.css";
 import { data } from "./data.js";
-import { ResponsiveDonut } from "./Donut.jsx";
+import { ResponsiveDonut } from "./React Donut Chart Transitions.js";
 import { DonutDatasetTransition } from "./donut-multiple-datasets.js";
 import {
   Select,
@@ -48,17 +47,10 @@ function App() {
 
   const [year, setYear] = useState("2024");
 
-  // console.log(result);
-
-  // console.log([...new Set(data.map((d) => d.year))]);
-
-  console.log(years);
-
-  // console.table(world2024);
-
   return (
     <>
       {/* Overall Dashboard */}
+
       <div style={{ padding: 20, maxWidth: 500 }}></div>
       <div
         style={{
@@ -69,6 +61,9 @@ function App() {
         <div className="gap-4">
           <div className="grid gap-y-4 grid-cols-1 md:grid-cols-2 md:gap-4">
             {/* First Row */}
+
+            {/* Figure 1: Stacked Area Chart */}
+
             <div
               ref={chart1Ref}
               className="bg-blue-600 border border-black rounded-sm h-100 md:h-75">
@@ -82,6 +77,9 @@ function App() {
                 Height: {chart1Size.height}
               </p>
             </div>
+
+            {/* Figure 2: Bar Chart */}
+
             <div
               ref={chart2Ref}
               className="bg-yellow-500 mb-4 border border-black rounded-sm h-100 md:h-75">
@@ -111,7 +109,7 @@ function App() {
                 </SelectContent>
               </Select>
               <p>The selected year is {Number(year) / 3}!</p>
-              {console.table(data.filter((d) => d.year === Number(year)))}
+              {/* {console.table(data.filter((d) => d.year === Number(year)))} */}
               <p>
                 {data
                   .filter((d) => d.year === Number(year))
@@ -120,7 +118,11 @@ function App() {
             </div>
           </div>
           <div className="gap-y-28"></div>
+
           {/* Second Row */}
+
+          {/* Figure 3: Line Chart Tracking the Rise of Renewables */}
+
           <div className="grid gap-y-4 grid-cols-1 md:grid-cols-2 md:gap-4">
             <div
               ref={chart3Ref}
@@ -137,6 +139,9 @@ function App() {
                 height={chart3Size.height}
               />
             </div>
+
+            {/* Figure 4: Donut Chart Showing Energy Mix */}
+
             <div
               ref={chart4Ref}
               className="bg-green-600 border rounded-sm h-100 md:h-75">

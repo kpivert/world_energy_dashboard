@@ -38,7 +38,7 @@ function getDonutDataForYear(year: number | string): DataItem[] {
     .filter(([key]) => !notNeeded.includes(key))
     .map(([key, value]) => ({
       source: key,
-      value: value as number,
+      value: (value as number) ?? 0,
     }));
 }
 
@@ -65,6 +65,21 @@ const colors = [
   "#9c6b4e",
   "#9498a0",
 ];
+
+// const SOURCES = [
+//   "coal",
+//   "gas",
+//   "oil",
+//   "nuclear",
+//   "hydro",
+//   "wind",
+//   "solar" /* ... */,
+// ];
+
+const SOURCES = Object.keys(data[0]).slice(3, 11);
+
+console.log(SOURCES);
+const colorScale = d3.scaleOrdinal<string>().domain(SOURCES).range(colors);
 
 export const ResponsiveDonut = ({
   year,
@@ -96,7 +111,10 @@ interface DonutProps {
 const Donut = ({ data, width, height }: DonutProps) => {
   const donutRef = useRef(null);
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2;
-  const pieGenerator = d3.pie<any, DataItem>().value((d) => d.value);
+  const pieGenerator = d3
+    .pie<any, DataItem>()
+    .value((d) => d.value)
+    .sort(null);
   const pie = useMemo(() => pieGenerator(data), [data]);
 
   // const pie = useMemo(() => pieGenerator(chartData), [chartData]);
@@ -115,7 +133,7 @@ const Donut = ({ data, width, height }: DonutProps) => {
 
     const centroid = arcPathGenerator.centroid(sliceInfo);
     const slicePath = arcPathGenerator(sliceInfo);
-    console.log(centroid);
+    // console.log(centroid);
     // Second Arc is for the Legend Inflexion Point
 
     const inflexionInfo = {
