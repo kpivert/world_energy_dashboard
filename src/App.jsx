@@ -92,22 +92,7 @@ function App() {
                 <br />
                 Height: {chart2Size.height}
               </p>
-              <Select value={year} onValueChange={setYear}>
-                <SelectTrigger className="w-full max-w-48">
-                  {/* <SelectValue placeholder="Select a Year" /> */}
-                  <SelectValue placeholder="Select a Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Years</SelectLabel>
-                    {years.map((y) => (
-                      <SelectItem key={y} value={String(y)}>
-                        {y}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+
               <p>The selected year is {Number(year) / 3}!</p>
               {/* {console.table(data.filter((d) => d.year === Number(year)))} */}
               <p>
@@ -134,17 +119,13 @@ function App() {
                 <br />
                 Height: {chart3Size.height}
               </p> */}
-              <DonutDatasetTransition
-                width={chart3Size.width}
-                height={chart3Size.height}
-              />
             </div>
 
             {/* Figure 4: Donut Chart Showing Energy Mix */}
 
             <div
               ref={chart4Ref}
-              className="bg-green-600 border rounded-sm h-100 md:h-75">
+              className="bg-grey-40 border rounded-sm h-100 md:h-75">
               {/* <p className="p-4 text-3xl text-white">This is number 4</p>
               <p className="p-4">
                 Donut Chart Breaking Down the Energy Mix for a Single Year
@@ -154,6 +135,28 @@ function App() {
                 <br />
                 Height: {chart4Size.height}
               </p> */}
+              <p classNam="p-4">World Energy Consumption by Source (TWhs)</p>
+              <Select value={year} onValueChange={setYear}>
+                <SelectTrigger className="w-full max-w-48">
+                  {/* <SelectValue placeholder="Select a Year" /> */}
+                  <SelectValue placeholder="Select a Year" />
+                </SelectTrigger>
+                {/* <SelectContent className="!max-h-[180px]"> */}
+                <SelectContent
+                  position="popper"
+                  side="bottom"
+                  sideOffset={4}
+                  className="!max-h-[180px]">
+                  <SelectGroup>
+                    <SelectLabel>Years</SelectLabel>
+                    {years.map((y) => (
+                      <SelectItem key={y} value={String(y)}>
+                        {y}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
               <ResponsiveDonut
                 year={year}
                 width={chart4Size.width}
