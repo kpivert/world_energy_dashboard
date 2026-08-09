@@ -3,6 +3,7 @@ import { useDimensions } from "./use-dimensions.js";
 import { data } from "./data.js";
 import { ResponsiveDonut } from "./React Donut Chart Transitions.js";
 import { DonutDatasetTransition } from "./donut-multiple-datasets.js";
+import { LineChart } from "./LineChart";
 import {
   Select,
   SelectContent,
@@ -28,6 +29,19 @@ function App() {
     .filter((d) => d.country === "World");
 
   const world = data.filter((d) => d.country === "World");
+
+  const sampleData = [
+    { x: 1, y: 90 },
+    { x: 2, y: 12 },
+    { x: 3, y: 34 },
+    { x: 4, y: 53 },
+    { x: 5, y: 98 },
+    { x: 6, y: 9 },
+    { x: 7, y: 18 },
+    { x: 8, y: 78 },
+    { x: 9, y: 28 },
+    { x: 10, y: 34 },
+  ];
 
   const donutExampleData = Object.entries(world2024).map(([key, value]) => ({
     source: key,
@@ -111,7 +125,7 @@ function App() {
           <div className="grid gap-y-4 grid-cols-1 md:grid-cols-2 md:gap-4">
             <div
               ref={chart3Ref}
-              className="bg-orange-700 h-100 md:h-75 border rounded-sm">
+              className="bg-grey h-100 md:h-75 border rounded-sm">
               {/* <p className="p-4 text-3xl text-white">This is number 3</p>
               <p className="p-4">Line Chart Tracking the Rise of Renewables</p>
               <p className="text-2xl text-orange-500">
@@ -119,6 +133,11 @@ function App() {
                 <br />
                 Height: {chart3Size.height}
               </p> */}
+              <LineChart
+                width={chart3Size.width}
+                height={chart3Size.height}
+                data={sampleData}
+              />
             </div>
 
             {/* Figure 4: Donut Chart Showing Energy Mix */}
