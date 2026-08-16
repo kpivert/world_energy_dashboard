@@ -57,6 +57,43 @@ function App() {
       value: value,
     }));
 
+  const renewableVars = [
+    "year",
+    "hydro",
+    "solar",
+    "wind",
+    "biofuel",
+    "other_renewable",
+  ];
+
+  // This is the dplyr equivalent of select()
+
+  // const renewableData = world.map((row) =>
+  //   Object.fromEntries(
+  //     renewablesVars.map((variable) => [variable, row[variable]]),
+  //   ),
+  // );
+
+  // const renewableData: Row[] = world.flatMap((row) =>
+  //   renewableVars.map((variable) => ({
+  //     x: row.year,
+  //     y: row[variable],
+  //     group: variable,
+  //   })),
+  // );
+
+  const renewableData = world.flatMap((row) =>
+    renewableVars
+      .map((variable) => ({
+        x: row.year,
+        y: row[variable],
+        group: variable,
+      }))
+      .filter((d) => d.group != "year"),
+  );
+
+  console.log(renewableData.filter((d) => d.group != "year"));
+
   const years = [...new Set(data.map((d) => d.year))].reverse();
 
   const [year, setYear] = useState("2024");
@@ -136,7 +173,7 @@ function App() {
               <LineChart
                 width={chart3Size.width}
                 height={chart3Size.height}
-                data={sampleData}
+                data={renewableData}
               />
             </div>
 
@@ -154,7 +191,7 @@ function App() {
                 <br />
                 Height: {chart4Size.height}
               </p> */}
-              <p classNam="p-4">World Energy Consumption by Source (TWhs)</p>
+              <p className="p-4">World Energy Consumption by Source (TWhs)</p>
               <Select value={year} onValueChange={setYear}>
                 <SelectTrigger className="w-full max-w-48">
                   {/* <SelectValue placeholder="Select a Year" /> */}
